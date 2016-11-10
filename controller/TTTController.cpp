@@ -1,0 +1,178 @@
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include "TTTController.h"
+#include "../model/model.h"
+#include "../rapidjson/document.h"
+#include "../rapidjson/writer.h"
+#include "../rapidjson/stringbuffer.h"
+
+void TTTController::createPlayer(string playerJsonObj)
+ {
+   ofstream file;
+   file.open("op.txt");
+   std::size_t pos = playerJsonObj.find("marker");
+   string markerstr = playerJsonObj.substr(pos);
+   std::string marker = markerstr.substr(9,1);
+   file<<marker;
+   std::size_t pos1 = playerJsonObj.find("name");
+   std::string namestr = playerJsonObj.substr(pos1);
+   std::string nameval = namestr.substr(7);
+   std::size_t pos2 = nameval.find("\"");
+   std::string name = nameval.substr(0,pos2);
+   file<<name;
+   file.close();
+   int playerNum = 1;
+  g1.set_Marker(name,marker,playerNum);
+ }
+
+void TTTController::startNewGame()
+  {
+    g1.createBoard();
+  }
+
+void TTTController::displayboard()
+  {
+    string board[3][3];
+      string boardstring = g1.getCurrentBoard();
+    int k=0;
+      for(int i=0;i<3;i++){
+        for(int j=0;j<3;j++){
+      board[i][j] = boardstring[k];
+      k++;
+        }
+      }
+  }
+
+  string TTTController::getAllSavedPlayers(string playerJsonObj){
+    const char* incomingJson = playerJsonObj.c_str();
+    rapidjson::Document d;
+    d.Parse(incomingJson);
+    rapidjson::Value& string_player1 = d["playerinfo"]["player1"]["player1_name"];
+    string player1 = string_player1.GetString();
+    rapidjson::Value& string_marker1 = d["playerinfo"]["player1"]["player1_marker"];
+    string marker1 = string_marker1.GetString();
+    rapidjson::Value& string_player2 = d["playerinfo"]["player2"]["player2_name"];
+    string player2 = string_player2.GetString();
+    rapidjson::Value& string_marker2 = d["playerinfo"]["player2"]["player2_marker"];
+    string marker2 = string_marker2.GetString();
+    std::string getplayers = "{\"methodcalled\":\"showplayers\",\"player1\":\"" +player1+ "\" , \"marker1\" : \""+marker1+"\" , \"player2\":\""+player2+"\",\"marker2\":\""+marker2+"\"}";
+    cout<<getplayers;
+    return getplayers;
+}
+
+string TTTController::do_selection(string playerJsonObj)
+{
+  TTTController t;
+  bool avail = t.setSelection(playerJsonObj);
+  //1cout<<"setworking"<<endl;
+  const char* incomingJson = playerJsonObj.c_str();
+  rapidjson::Document d;
+  d.Parse(incomingJson);
+  //cout<<"do_selection entered"<<endl;
+  ostringstream ss;
+  ss << boolalpha << avail;
+  std::string avail1 = ss.str();
+  string display = t.getGameDisplay();
+  string curplayer = g1.getCurrentPlayerJson(playerJsonObj);
+  string nextplayer = g1.switchturn(curplayer);
+  string currentmarker = g1.getCurrentmarker(playerJsonObj);
+  rapidjson::Value& souterstring = d["outerstring"];
+  string outerstring = souterstring.GetString();
+  //cout<<"complete outer:"<<outerstring<<endl;
+  rapidjson::Value& scurrentouter = d["currentouter"];
+  string currentouter = scurrentouter.GetString();
+  string winstatus = g1.checkWin(playerJsonObj);
+  if(winstatus == "1"){
+    // cout<<"outerstring: "<<outerstring<<endl;
+    // cout<<"currentouter: "<<currentouter<<endl;
+    outerstring = g1.updateOuterString(outerstring,currentmarker,currentouter);
+  }
+  else if(winstatus == "2"){
+    // cout<<"outerstring: "<<outerstring<<endl;
+    // cout<<"currentouter: "<<currentouter<<endl;
+    outerstring = g1.updateOuterString(outerstring,currentmarker,currentouter);
+  }
+  string outerwinstatus = g1.checkOuterWin(playerJsonObj);
+  //cout<<"current outer:"<<currentouter<<endl;
+  std::string tempavail = "{\"methodcalled\":\"setSelection\",\"bool\": "+avail1+",\"displayselecteddata\": \""+display+"\",\"currentplayer\" : \""+nextplayer+"\",\"winstatus\":\""+winstatus+"\",\"outerstring\":\""+outerstring+"\",\"currentouter\":\""+currentouter+"\",\"outerwinstatus\":\""+outerwinstatus+"\"}";
+  cout<<tempavail;
+  return display;
+}
+
+bool TTTController::setSelection(string playerJsonObj)
+  {
+    // std::size_t pos1 = playerJsonObj.find("row");
+    // string markerstr1 = playerJsonObj.substr(pos1);
+    // string rowstr = markerstr1.substr(5,1);
+    // std::size_t pos2 = playerJsonObj.find("col");
+    // string markerstr2 = playerJsonObj.substr(pos2);
+    // string colstr = markerstr2.substr(5,1);
+    const char* incomingJson = playerJsonObj.c_str();
+    rapidjson::Document d;
+    d.Parse(incomingJson);
+    rapidjson::Value& srow = d["controllerMethod"]["input"]["row"];
+    rapidjson::Value& scol = d["controllerMethod"]["input"]["col"];
+    int row = srow.GetInt();
+    int col = scol.GetInt();
+    rapidjson::Value& jsonboard = d["boardstring"];
+    string jsonboardstring = jsonboard.GetString();
+    g1.sendString(jsonboardstring);
+    g1.sendOuterString(jsonboardstring);
+    string cp = g1.getCurrentPlayerJson(playerJsonObj);
+    int currentPlayer = 1;
+    bool availability;
+    if(row<3 && col <3){
+      availability = g1.checkfree(row,col);
+      if(availability == true){
+        g1.updateboard(row,col,currentPlayer);
+      }
+      else{
+        //cout<<"invalid play, Loose your turn!"<<endl;
+      }
+    }
+    //cout<<"set selection complete"<<endl;
+    return availability;
+  }
+// int TTTController::determineWinner()
+// {
+//   //int currentPlayer = g1.getCurrentPlayer();
+//
+//   //int winstatus = g1.checkWin(currentPlayer);
+// return winstatus;
+// }
+
+int TTTController::currentPlayer(){
+  return g1.getCurrentPlayer();
+}
+
+string TTTController::currentPlayerName(){
+  return g1.getCurrentPlayerName();
+}
+
+string TTTController::getGameDisplay()
+{
+    string boardstring = g1.getCurrentBoard();
+  int k=0;
+    for(int i=0;i<3;i++){
+      for(int j=0;j<3;j++){
+
+    k++;
+      }
+    }
+return boardstring;
+}
+
+string TTTController::getOuterGameDisplay()
+{
+    string outerboardstring = g1.getCurrentOuterBoard();
+  int k=0;
+    for(int i=0;i<3;i++){
+      for(int j=0;j<3;j++){
+
+    k++;
+      }
+    }
+return outerboardstring;
+}

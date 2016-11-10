@@ -1,0 +1,120 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+#board {
+  padding: 0px;
+  margin: 0 auto;
+  border: 4px solid purple;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+
+}
+
+#outerboard1 {
+  padding: 0px;
+  margin: 0 auto;
+  border: 5px solid #f49242;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#outerboard2 {
+  padding: 0px;
+  margin: 0 auto;
+  border: 5px solid #f49242;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+#outerboard3 {
+  padding: 0px;
+  margin: 0 auto;
+  border: 5px solid #f49242;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+#outerboard4 {
+  padding: 0px;
+  margin: 0 auto;
+  border: 5px solid #f49242;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+#outerboard5 {
+  padding: 0px;
+  margin: 0 auto;
+  border: 5px solid #f49242;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+#outerboard6 {
+  padding: 0px;
+  margin: 0 auto;
+  border: 5px solid #f49242;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+#outerboard7 {
+  padding: 0px;
+  margin: 0 auto;
+  border: 5px solid #f49242;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+#outerboard8 {
+  padding: 0px;
+  margin: 0 auto;
+  border: 5px solid #f49242;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+#outerboard9 {
+  padding: 0px;
+  margin: 0 auto;
+  border: 5px solid #f49242;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+#board tr td {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #1c1c1c;
+  font-family: Helvetica;
+  font-size: 15px;
+  text-align: center;
+}
+
+#board tr td:hover {
+  background: #e4e4e4;
+  cursor: pointer;
+}
+
+.togglebutton{
+  display: block;
+}

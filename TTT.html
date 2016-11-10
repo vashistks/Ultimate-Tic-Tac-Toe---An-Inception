@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>Tic Tac Toe</title>
+<script src="view/ttt.js"></script>
+<link rel="stylesheet" type="text/css" href="view/style.css">
+</head>
+<body>
+<h1 align="center">Tic Tac Toe Game </h1>
+<div>
+  <table><tr><td>
+<table align = "center">
+  <tr><td>
+<tr><td>Name:</td><td><input type="text" id="playername1"></td></tr><br>
+<tr><td>Marker:</td><td><input type="text"  id="playermarker1"><br></td></tr><br>
+<tr><td colspan="2" align="center"><button type="button" class="btn" onclick="createPlayer('1')"> Create Player 1 </button>
+</td><td>
+  <tr><td>Name:</td><td><input type="text" id="playername2"></td></tr><br>
+<tr><td>Marker:</td><td><input type="text" id="playermarker2"><br></td></tr><br>
+<tr><td colspan="2" align="center"><button type="button" class="btn" onclick="createPlayer('2')"> Create Player 2 </button></td></tr> <br>
+</td>
+</tr>
+</table>
+</td>
+<p id="result" class="display">
+</p>
+  </td>
+</tr></table>
+<center><button type="button" class="btn" onclick="startGame()"> Start Game</button></center>
+<table><tr>
+<td>
+  <button type="button" class = "btn" onclick="showplayers()"> Show all players </button>
+  <div id="show" class = "display">
+  </div>
+</td>
+  <td>
+<table id='board'>
+  <tr>
+    <td id="0" onclick="setSelection('0')"></td> <td id="1" onclick="setSelection('1')"></td> <td id="2" onclick="setSelection('2')"></td>
+  </tr>
+  <tr>
+    <td id="3" onclick="setSelection('3')"> </td> <td id="4" onclick="setSelection('4')"></td> <td id="5" onclick="setSelection('5')"></td>
+  </tr>
+  <tr>
+    <td id="6" onclick="setSelection('6')"></td><td id="7" onclick="setSelection('7')"></td><td id="8" onclick="setSelection('8')"></td>
+  </tr>
+</table>
+</td>
+</tr>
+
+</body>
+</html>
