@@ -34,16 +34,14 @@ else if(methodname == "startGame"){
   string display = controller.getGameDisplay();
   string outerdisplay = controller.getOuterGameDisplay();
   string jsondisplay = "{\"methodcalled\":\"startGame\",\"displayboard\":\""+display+"\",\"currentplayer\":\"1\",\"outerstring\":\""+outerdisplay+"\"}";
-//cout<<" called";
   cout<<jsondisplay;
-  //winstatus = controller.determineWinner();
-  //cout<<winstatus;
 }
-// else if(methodname == 'startUltimateGame'){
-//
-// }
+
 else if(methodname == "showplayers"){
   string players = controller.getAllSavedPlayers(incomingJsonObjectString);
+}
+else if(methodname == "restartGame"){
+controller.restartGame();
 }
 
 }

@@ -1,0 +1,175 @@
+<html>
+<head>
+<title>Tic Tac Toe</title>
+<script src="view/ttt.js"></script>
+<script src="jquery-3.1.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="view/style.css">
+</head>
+<body>
+<h1 align="center">Ultimate Tic Tac Toe </h1>
+<div>
+  <h2>
+    <a href="ttt.html">Click Here to play Normal Tic Tac Toe </a>
+  </h2>
+  <table><tr><td>
+<table align = "center">
+  <tr><td>
+<tr><td>Name:</td><td><input type="text" id="playername1"></td></tr><br>
+<tr><td>Marker:</td><td><input type="text" value="x" id="playermarker1"><br></td></tr><br>
+<tr><td colspan="2" align="center"><button type="button" class="btn" onclick="createPlayer('1')"> Create Player 1 </button>
+</td><td>
+  <tr><td>Name:</td><td><input type="text" id="playername2"></td></tr><br>
+<tr><td>Marker:</td><td><input type="text" value="o" id="playermarker2"><br></td></tr><br>
+<tr><td colspan="2" align="center"><button type="button" class="btn" onclick="createPlayer('2')"> Create Player 2 </button></td></tr> <br>
+</td>
+</tr>
+</table>
+</td>
+<p id="result" class="display"></p>
+<p id="result2" class="display"></p>
+<p id="turn" class="display"></p>
+  </td>
+</tr></table>
+<center><button type="button" class="btn" onclick="startGame()"> Start Game</button></center>
+<table><tr>
+<td>
+  <button type="button" class = "btn" onclick="showplayers()"> Show all players </button>
+  <div id="show" class = "display">
+  </div>
+</td>
+  <td>
+    <table>
+      <tr>
+        <td>
+<div id='outerboard1'>
+  <table id='board'>
+    <tr>
+      <td id="0" onclick="setSelection('0','1')"></td> <td id="1" onclick="setSelection('1','1')"></td> <td id="2" onclick="setSelection('2','1')"></td>
+    </tr>
+    <tr>
+      <td id="3" onclick="setSelection('3','1')"> </td> <td id="4" onclick="setSelection('4','1')"></td> <td id="5" onclick="setSelection('5','1')"></td>
+    </tr>
+    <tr>
+      <td id="6" onclick="setSelection('6','1')"></td><td id="7" onclick="setSelection('7','1')"></td><td id="8" onclick="setSelection('8','1')"></td>
+    </tr>
+  </table>
+</div>
+</td><td>
+<div id='outerboard2'>
+  <table id='board'>
+    <tr>
+      <td id="0" onclick="setSelection('0','2')"></td> <td id="1" onclick="setSelection('1','2')"></td> <td id="2" onclick="setSelection('2','2')"></td>
+    </tr>
+    <tr>
+      <td id="3" onclick="setSelection('3','2')"> </td> <td id="4" onclick="setSelection('4','2')"></td> <td id="5" onclick="setSelection('5','2')"></td>
+    </tr>
+    <tr>
+      <td id="6" onclick="setSelection('6','2')"></td><td id="7" onclick="setSelection('7','2')"></td><td id="8" onclick="setSelection('8','2')"></td>
+    </tr>
+  </table>
+</div>
+</td><td>
+<div id='outerboard3'>
+  <table id='board'>
+    <tr>
+      <td id="0" onclick="setSelection('0','3')"></td> <td id="1" onclick="setSelection('1','3')"></td> <td id="2" onclick="setSelection('2','3')"></td>
+    </tr>
+    <tr>
+      <td id="3" onclick="setSelection('3','3')"> </td> <td id="4" onclick="setSelection('4','3')"></td> <td id="5" onclick="setSelection('5','3')"></td>
+    </tr>
+    <tr>
+      <td id="6" onclick="setSelection('6','3')"></td><td id="7" onclick="setSelection('7','3')"></td><td id="8" onclick="setSelection('8','3')"></td>
+    </tr>
+  </table>
+</div>
+</td></tr><tr><td>
+<div id='outerboard4'>
+  <table id='board'>
+    <tr>
+      <td id="0" onclick="setSelection('0','4')"></td> <td id="1" onclick="setSelection('1','4')"></td> <td id="2" onclick="setSelection('2','4')"></td>
+    </tr>
+    <tr>
+      <td id="3" onclick="setSelection('3','4')"> </td> <td id="4" onclick="setSelection('4','4')"></td> <td id="5" onclick="setSelection('5','4')"></td>
+    </tr>
+    <tr>
+      <td id="6" onclick="setSelection('6','4')"></td><td id="7" onclick="setSelection('7','4')"></td><td id="8" onclick="setSelection('8','4')"></td>
+    </tr>
+  </table>
+</div>
+</td><td>
+<div id='outerboard5'>
+  <table id='board'>
+    <tr>
+      <td id="0" onclick="setSelection('0','5')"></td> <td id="1" onclick="setSelection('1','5')"></td> <td id="2" onclick="setSelection('2','5')"></td>
+    </tr>
+    <tr>
+      <td id="3" onclick="setSelection('3','5')"> </td> <td id="4" onclick="setSelection('4','5')"></td> <td id="5" onclick="setSelection('5','5')"></td>
+    </tr>
+    <tr>
+      <td id="6" onclick="setSelection('6','5')"></td><td id="7" onclick="setSelection('7','5')"></td><td id="8" onclick="setSelection('8','5')"></td>
+    </tr>
+  </table>
+</div>
+</td><td>
+<div id='outerboard6'>
+  <table id='board'>
+    <tr>
+      <td id="0" onclick="setSelection('0','6')"></td> <td id="1" onclick="setSelection('1','6')"></td> <td id="2" onclick="setSelection('2','6')"></td>
+    </tr>
+    <tr>
+      <td id="3" onclick="setSelection('3','6')"> </td> <td id="4" onclick="setSelection('4','6')"></td> <td id="5" onclick="setSelection('5','6')"></td>
+    </tr>
+    <tr>
+      <td id="6" onclick="setSelection('6','6')"></td><td id="7" onclick="setSelection('7','6')"></td><td id="8" onclick="setSelection('8','6')"></td>
+    </tr>
+  </table>
+</div>
+</td></tr><tr><td>
+<div id='outerboard7'>
+  <table id='board'>
+    <tr>
+      <td id="0" onclick="setSelection('0','7')"></td> <td id="1" onclick="setSelection('1','7')"></td> <td id="2" onclick="setSelection('2','7')"></td>
+    </tr>
+    <tr>
+      <td id="3" onclick="setSelection('3','7')"> </td> <td id="4" onclick="setSelection('4','7')"></td> <td id="5" onclick="setSelection('5','7')"></td>
+    </tr>
+    <tr>
+      <td id="6" onclick="setSelection('6','7')"></td><td id="7" onclick="setSelection('7','7')"></td><td id="8" onclick="setSelection('8','7')"></td>
+    </tr>
+  </table>
+</div>
+</td><td>
+<div id='outerboard8'>
+  <table id='board'>
+    <tr>
+      <td id="0" onclick="setSelection('0','8')"></td> <td id="1" onclick="setSelection('1','8')"></td> <td id="2" onclick="setSelection('2','8')"></td>
+    </tr>
+    <tr>
+      <td id="3" onclick="setSelection('3','8')"> </td> <td id="4" onclick="setSelection('4','8')"></td> <td id="5" onclick="setSelection('5','8')"></td>
+    </tr>
+    <tr>
+      <td id="6" onclick="setSelection('6','8')"></td><td id="7" onclick="setSelection('7','8')"></td><td id="8" onclick="setSelection('8','8')"></td>
+    </tr>
+  </table>
+</div>
+</td><td>
+<div id='outerboard9'>
+  <table id='board'>
+    <tr>
+      <td id="0" onclick="setSelection('0','9')"></td> <td id="1" onclick="setSelection('1','9')"></td> <td id="2" onclick="setSelection('2','9')"></td>
+    </tr>
+    <tr>
+      <td id="3" onclick="setSelection('3','9')"> </td> <td id="4" onclick="setSelection('4','9')"></td> <td id="5" onclick="setSelection('5','9')"></td>
+    </tr>
+    <tr>
+      <td id="6" onclick="setSelection('6','9')"></td><td id="7" onclick="setSelection('7','9')"></td><td id="8" onclick="setSelection('8','9')"></td>
+    </tr>
+  </table>
+</div>
+</td></tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

@@ -25,7 +25,7 @@ public:
   string getCurrentBoard();
   string getCurrentOuterBoard();
   string checkWin(string playerJsonObj);
-  string checkOuterWin(string playerJsonObj);
+  string checkOuterWin(string playerJsonObj,string outerstring);
   string getCurrentPlayerName();
   void sendString(string jsonboardstring);
   void sendOuterString(string jsonboardstring);

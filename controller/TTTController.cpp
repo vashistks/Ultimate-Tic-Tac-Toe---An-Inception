@@ -70,7 +70,6 @@ string TTTController::do_selection(string playerJsonObj)
   const char* incomingJson = playerJsonObj.c_str();
   rapidjson::Document d;
   d.Parse(incomingJson);
-  //cout<<"do_selection entered"<<endl;
   ostringstream ss;
   ss << boolalpha << avail;
   std::string avail1 = ss.str();
@@ -80,35 +79,26 @@ string TTTController::do_selection(string playerJsonObj)
   string currentmarker = g1.getCurrentmarker(playerJsonObj);
   rapidjson::Value& souterstring = d["outerstring"];
   string outerstring = souterstring.GetString();
-  //cout<<"complete outer:"<<outerstring<<endl;
   rapidjson::Value& scurrentouter = d["currentouter"];
   string currentouter = scurrentouter.GetString();
+  rapidjson::Value& scurrentinner = d["controllerMethod"]["input"]["currentinner"];
+  string currentinner = scurrentinner.GetString();
   string winstatus = g1.checkWin(playerJsonObj);
   if(winstatus == "1"){
-    // cout<<"outerstring: "<<outerstring<<endl;
-    // cout<<"currentouter: "<<currentouter<<endl;
+
     outerstring = g1.updateOuterString(outerstring,currentmarker,currentouter);
   }
   else if(winstatus == "2"){
-    // cout<<"outerstring: "<<outerstring<<endl;
-    // cout<<"currentouter: "<<currentouter<<endl;
     outerstring = g1.updateOuterString(outerstring,currentmarker,currentouter);
   }
-  string outerwinstatus = g1.checkOuterWin(playerJsonObj);
-  //cout<<"current outer:"<<currentouter<<endl;
-  std::string tempavail = "{\"methodcalled\":\"setSelection\",\"bool\": "+avail1+",\"displayselecteddata\": \""+display+"\",\"currentplayer\" : \""+nextplayer+"\",\"winstatus\":\""+winstatus+"\",\"outerstring\":\""+outerstring+"\",\"currentouter\":\""+currentouter+"\",\"outerwinstatus\":\""+outerwinstatus+"\"}";
+  string outerwinstatus = g1.checkOuterWin(playerJsonObj,outerstring);
+  std::string tempavail = "{\"methodcalled\":\"setSelection\",\"bool\": "+avail1+",\"currentinner\":\""+currentinner+"\",\"displayselecteddata\": \""+display+"\",\"currentplayer\" : \""+nextplayer+"\",\"winstatus\":\""+winstatus+"\",\"outerstring\":\""+outerstring+"\",\"currentouter\":\""+currentouter+"\",\"outerwinstatus\":\""+outerwinstatus+"\"}";
   cout<<tempavail;
   return display;
 }
 
 bool TTTController::setSelection(string playerJsonObj)
   {
-    // std::size_t pos1 = playerJsonObj.find("row");
-    // string markerstr1 = playerJsonObj.substr(pos1);
-    // string rowstr = markerstr1.substr(5,1);
-    // std::size_t pos2 = playerJsonObj.find("col");
-    // string markerstr2 = playerJsonObj.substr(pos2);
-    // string colstr = markerstr2.substr(5,1);
     const char* incomingJson = playerJsonObj.c_str();
     rapidjson::Document d;
     d.Parse(incomingJson);
@@ -119,7 +109,7 @@ bool TTTController::setSelection(string playerJsonObj)
     rapidjson::Value& jsonboard = d["boardstring"];
     string jsonboardstring = jsonboard.GetString();
     g1.sendString(jsonboardstring);
-    g1.sendOuterString(jsonboardstring);
+    //g1.sendOuterString(jsonboardstring);
     string cp = g1.getCurrentPlayerJson(playerJsonObj);
     int currentPlayer = 1;
     bool availability;
@@ -135,13 +125,6 @@ bool TTTController::setSelection(string playerJsonObj)
     //cout<<"set selection complete"<<endl;
     return availability;
   }
-// int TTTController::determineWinner()
-// {
-//   //int currentPlayer = g1.getCurrentPlayer();
-//
-//   //int winstatus = g1.checkWin(currentPlayer);
-// return winstatus;
-// }
 
 int TTTController::currentPlayer(){
   return g1.getCurrentPlayer();
@@ -175,4 +158,10 @@ string TTTController::getOuterGameDisplay()
       }
     }
 return outerboardstring;
+}
+
+void TTTController::restartGame(){
+  //cout<<"comin"<<endl;
+  string game = "{\"methodcalled\":\"restartGame\",\"board\":\"---------\",\"currentplayer\":\"1\"}";
+  cout<<game;
 }

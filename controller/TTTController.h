@@ -22,5 +22,6 @@ public:
   int currentPlayer();
   string currentPlayerName();
   string getAllSavedPlayers(string playerJsonObj);
+  void restartGame();
 } ;
 #endif
