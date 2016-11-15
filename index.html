@@ -57,7 +57,7 @@
       <div class="row-fluid"> <div class="span4>">
     <table align = "center">
     <tr><td><span class="label label-info" style="font-size: 20px">Name:</span></td><td><input type="text" id="playername1"></td></tr>
-    <tr><td><span class="label label-info" style="font-size: 20px">Marker:</span></td><td><input type="text" value="x" id="playermarker1"></td><td colspan="2" align="center"><button type="button" class="btn" onclick="createPlayer('1')"> Create Player 1 </button></td> </tr>
+    <tr><td><span class="label label-info" style="font-size: 20px">Marker:</span></td><td><input type="text" id="playermarker1"></td><td colspan="2" align="center"><button type="button" class="btn" onclick="createPlayer('1')"> Create Player 1 </button></td> </tr>
     <tr>
     </tr>
     </table>
@@ -65,7 +65,7 @@
    <div class="row-fluid"> <div class="span4>">
     <table align="center"><tr>
       <tr><td><span class="label label-info" style="font-size: 20px">Name:</span></td><td><input type="text" id="playername2"></td></tr>
-    <tr><td><span class="label label-info" style="font-size: 20px">Marker:</span></td><td><input type="text" value="o" id="playermarker2"></td><td colspan="2" align="center"><button type="button" class="btn" onclick="createPlayer('2')"> Create Player 2 </button></td></tr>
+    <tr><td><span class="label label-info" style="font-size: 20px">Marker:</span></td><td><input type="text" id="playermarker2"></td><td colspan="2" align="center"><button type="button" class="btn" onclick="createPlayer('2')"> Create Player 2 </button></td></tr>
     <tr></tr>
   </tr>
 </table> </div> </div>
@@ -215,6 +215,8 @@
   <br>
   <div class="span8 offset3"><button type="button" class = "btn" onclick="showplayers()"> Show all players </button>
   <div id="show" class = "display">
+    <ul id="List"><b>
+    </b></ul>
   </div>
 </div>
 </div>

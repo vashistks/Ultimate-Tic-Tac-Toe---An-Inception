@@ -43,5 +43,8 @@ else if(methodname == "showplayers"){
 else if(methodname == "restartGame"){
 controller.restartGame();
 }
+else if(methodname == "updatesavedjson"){
+  controller.updatesavedjson(incomingJsonObjectString);
+}
 
 }

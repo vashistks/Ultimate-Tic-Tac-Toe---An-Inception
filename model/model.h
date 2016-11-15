@@ -32,6 +32,8 @@ public:
   string getCurrentPlayerJson(string jsonboardstring);
   string getCurrentmarker(string playerJsonObj);
   string updateOuterString(string outerstring,string currentmarker,string currentouter);
+  void updateJsonInFile(string playerJsonObj);
+  string getJsonInFile();
 } ;
 
 #endif

@@ -19,8 +19,8 @@ var playerJsonObj =
   },
   players:
   [{
-        players_name : {},
-        players_marker: {},
+        players_name : "Sample",
+        players_marker: "p",
         uwins:0,
         uloss:0,
         utie:0
@@ -46,6 +46,10 @@ function Initdata(){
 }
 
 var cgiPath = "cgi-bin/main.cgi";
+
+function updatesavedjson(){
+  gameplay('updatesavedjson',"");
+}
 
 function players(methodName, input)
 {
@@ -85,14 +89,12 @@ function gameplay(methodName, input)
         else if(retJsonObj.winstatus == '1'){
           var outermarker = getprevmarker(currentplayer);
           var curboard = 'boardstring' + divboard;
-          console.log(outermarker);
           playerJsonObj['allboardstring'][curboard] = outermarker;
           alert("Player 1 wins box" + retJsonObj.currentouter);
           document.getElementById("result").innerHTML = "Player 1 wins box" + retJsonObj.currentouter;
           playerJsonObj['disabledblocks'].push(divboard);// = divboard;
           var selection = --divboard;
           var setselection = retJsonObj.currentinner;
-          console.log('set selection',setselection);
           enableTable(setselection);
         }
         else if (retJsonObj.winstatus == '2'){
@@ -104,7 +106,6 @@ function gameplay(methodName, input)
           playerJsonObj['disabledblocks'].push(divboard);
           var selection = --divboard;
           var setselection = retJsonObj.currentinner;
-          console.log('set selection',setselection);
           enableTable(setselection);
         }
         else if (retJsonObj.winstatus == '3'){
@@ -184,11 +185,11 @@ var arr = playerJsonObj.players;
         arr[i]['uloss'] = count2;
       }
     }
-
+    updatesavedjson();
     document.getElementById("result").innerHTML = "PLAYER 1 WINS THE GAME";
     document.getElementById("result2").innerHTML = "PLAYER 1 WINS THE GAME";
     document.getElementById("turn").innerHTML = "PLAYER 1 WINS THE GAME";
-        alert('Player 1 wins');
+    alert('Player 1 wins');
 
     }
   else if (outerwinstatus == '2') {
@@ -204,7 +205,7 @@ var arr = playerJsonObj.players;
         arr[i]['uloss'] = count2;
       }
     }
-
+    updatesavedjson();
     document.getElementById("result").innerHTML = "PLAYER 2 WINS THE GAME";
     document.getElementById("result2").innerHTML = "PLAYER 2 WINS THE GAME";
     document.getElementById("turn").innerHTML = "PLAYER 2 WINS THE GAME";
@@ -226,7 +227,7 @@ var arr = playerJsonObj.players;
         arr[i]['utie'] = count2;
       }
     }
-
+    updatesavedjson();
     document.getElementById("result").innerHTML = "IT'S A TIE";
     document.getElementById("result2").innerHTML = "IT'S A TIE";
     document.getElementById("turn").innerHTML = "IT'S A TIE";
@@ -296,6 +297,7 @@ function createPlayer(num) {
 
 
 function startGame(){
+  updatesavedjson();
   gameplay("startGame","");
 }
 
@@ -308,8 +310,16 @@ function startUltimateGame(){
 }
 
 function showplayers(){
-  gameplay("showplayers","");
-
+  //gameplay("showplayers","");
+  var vList = document.getElementById("List");
+  			var players = playerJsonObj.players;
+  			for(var i=0; i<players.length; i++){
+  				var listItem = document.createElement("li"); // Create a <li> node
+  				var v = players[i];
+  				var playDescr = document.createTextNode("Name: " + v.players_name+", marker : "+v.players_marker+", uwins: "+ v.uwins +", uloss: "+ v.uloss + " utie: "+ v.utie );
+  				listItem.appendChild(playDescr);
+  				vList.appendChild(listItem);
+  			}
 }
 
 function getOuterRow(divboard) {
@@ -379,15 +389,11 @@ function setSelection(selectionval,divboard){
   playerJsonObj.currentmarker = currentmarker;
   playerJsonObj.currentouter = divboard;
   var currentstring = 'boardstring' + divboard;
-  console.log(currentstring);
   var s;
   s = playerJsonObj['allboardstring'][currentstring];
-  console.log(s);
   enableTable(selectionval);
   var outerRow = getOuterRow(divboard);
   var outerCol = getOuterCol(divboard);
-
-  console.log(divElement);
   var selection = {};
   selection.currentinner = selectionval;
   selection.outerstring = playerJsonObj.outerstring;
@@ -402,7 +408,6 @@ function setSelection(selectionval,divboard){
         selection.col = 0;
         s = currentmarker + s.slice(1);
         playerJsonObj.boardstring = s;
-        console.log(s);
         divElement.getElementsByTagName("td")[selectionval].innerHTML = currentmarker;
       }
     }
@@ -413,7 +418,6 @@ function setSelection(selectionval,divboard){
       else {
        selection.row = 0;
        selection.col = 1;
-       console.log(s);
        s = s.slice(0,selectionval) + currentmarker + s.slice(2);
        playerJsonObj.boardstring = s;
        divElement.getElementsByTagName("td")[selectionval].innerHTML = currentmarker;
@@ -517,7 +521,7 @@ function enableTable(selectionval){
   var inc = ++selectionval;
   var outerboard = '#outerboard' + inc;
   var arr = playerJsonObj.disabledblocks;
-console.log('blocked array length', arr.length);
+  console.log('blocked array length', arr.length);
   enableAllTables();
   if(arr == ""){
     disableAllTables();

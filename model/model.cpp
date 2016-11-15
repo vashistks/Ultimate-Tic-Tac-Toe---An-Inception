@@ -232,8 +232,27 @@ string gameplay::updateOuterString(string outerstring,string currentmarker,strin
   string changestring = outerstring;
   string c = currentmarker;
 
-  int out = atoi(currentouter.c_str());//stoi(currentouter);
+  int out = atoi(currentouter.c_str());
   out = out - 1;
   changestring.replace(out,1,c);
 return changestring;
+}
+
+void gameplay::updateJsonInFile(string playerJsonObj) {
+
+  std::ofstream file;
+  file.open("json.txt");
+  file << playerJsonObj << endl;
+  file.close();
+  std::string json = "{\"methodcalled\":\"updatesavedjson\"}";
+  cout<<json;
+}
+
+string gameplay::getJsonInFile(){
+  string json;
+  std::ifstream file;
+  file.open("json.txt");
+  getline(file,json);
+
+return json;
 }

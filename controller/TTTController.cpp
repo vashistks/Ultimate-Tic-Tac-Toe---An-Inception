@@ -46,27 +46,27 @@ void TTTController::displayboard()
   }
 
   string TTTController::getAllSavedPlayers(string playerJsonObj){
-    const char* incomingJson = playerJsonObj.c_str();
-    rapidjson::Document d;
-    d.Parse(incomingJson);
-    rapidjson::Value& string_player1 = d["playerinfo"]["player1"]["player1_name"];
-    string player1 = string_player1.GetString();
-    rapidjson::Value& string_marker1 = d["playerinfo"]["player1"]["player1_marker"];
-    string marker1 = string_marker1.GetString();
-    rapidjson::Value& string_player2 = d["playerinfo"]["player2"]["player2_name"];
-    string player2 = string_player2.GetString();
-    rapidjson::Value& string_marker2 = d["playerinfo"]["player2"]["player2_marker"];
-    string marker2 = string_marker2.GetString();
-    std::string getplayers = "{\"methodcalled\":\"showplayers\",\"player1\":\"" +player1+ "\" , \"marker1\" : \""+marker1+"\" , \"player2\":\""+player2+"\",\"marker2\":\""+marker2+"\"}";
+    string players = playerJsonObj;
+    std::string getplayers = "{\"methodcalled\":\"showplayers2\",\"players\":\""+players+"\"}";
     cout<<getplayers;
     return getplayers;
+}
+
+string TTTController::getAllSavedPlayers(){
+  string players = g1.getJsonInFile();
+  std::string getplayers = "{\"methodcalled\":\"showplayers\",\"players\":\""+players+"\"}";
+  cout<<getplayers;
+  return getplayers;
+}
+
+void TTTController::updatesavedjson(string playerJsonObj){
+  g1.updateJsonInFile(playerJsonObj);
 }
 
 string TTTController::do_selection(string playerJsonObj)
 {
   TTTController t;
   bool avail = t.setSelection(playerJsonObj);
-  //1cout<<"setworking"<<endl;
   const char* incomingJson = playerJsonObj.c_str();
   rapidjson::Document d;
   d.Parse(incomingJson);
@@ -119,10 +119,10 @@ bool TTTController::setSelection(string playerJsonObj)
         g1.updateboard(row,col,currentPlayer);
       }
       else{
-        //cout<<"invalid play, Loose your turn!"<<endl;
+
       }
     }
-    //cout<<"set selection complete"<<endl;
+
     return availability;
   }
 
@@ -161,7 +161,7 @@ return outerboardstring;
 }
 
 void TTTController::restartGame(){
-  //cout<<"comin"<<endl;
+  
   string game = "{\"methodcalled\":\"restartGame\",\"board\":\"---------\",\"currentplayer\":\"1\"}";
   cout<<game;
 }

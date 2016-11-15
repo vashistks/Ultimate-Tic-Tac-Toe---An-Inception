@@ -23,5 +23,7 @@ public:
   string currentPlayerName();
   string getAllSavedPlayers(string playerJsonObj);
   void restartGame();
+  void updatesavedjson(string playerJsonObj);
+  string getAllSavedPlayers();
 } ;
 #endif
