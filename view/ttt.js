@@ -374,6 +374,8 @@ function getCurrentmarker(currentplayer){
 function setSelection(selectionval,divboard){
   var div = 'outerboard' + divboard;
   var divElement = document.getElementById(div);
+  console.log("The div element",divElement);
+  console.log("innerHTML",divElement.getElementsByTagName("td")[selectionval].innerHTML);
   if(divElement.getElementsByTagName("td")[selectionval].innerHTML != ""){
     console.log('ERRRRROORRRR');
     alert('Wrong play');
